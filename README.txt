@@ -1,4 +1,4 @@
-* Commands:
+* Commands (Chạy command trong thư mục gốc của project):
  - Start containers và tạo volume: docker-compose up -d
  - Ngưng, xóa tất cả containers và volume: docker-compose down -v
  - Xem log của db: docker-compose logs db
