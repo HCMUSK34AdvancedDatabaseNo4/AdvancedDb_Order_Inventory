@@ -16,7 +16,7 @@
 
   [
     {
-      "UserId": 123,
+      "UserId": "123",
       "ProductId": "67e822da6be448e52dfcfa8f",
       "Quantity": 2,
       "Price": 50.0
@@ -28,13 +28,13 @@
 
   [
     {
-      "UserId": 123,
+      "UserId": "123",
       "ProductId": "67e822da6be448e52dfcfa8f",
       "Quantity": 2,
       "Price": 50.0
     },
     {
-      "UserId": 123,
+      "UserId": "123",
       "ProductId": "67e822da6be448e52dfcfa90",
       "Quantity": 4,
       "Price": 100.0
@@ -45,13 +45,13 @@
 
   [
     {
-      "UserId": 123,
+      "UserId": "123",
       "ProductId": "67e822da6be448e52dfcfa90", 
       "Quantity": 100, //Đủ quantity, (stock mặc định có sẵn 1000 sp)
       "Price": 100.0
     },
     {
-      "UserId": 123,
+      "UserId": "123",
       "ProductId": "67e822da6be448e52dfcfa8f",
       "Quantity": 10000, //Ko đủ quantity, sản phẩm bên trên đủ quantity cũng ko dc tạo order thành công mà phải roll back, vì cả 2 sản phẩm đều thuộc 1 order (giống 2 phase commit). FE có thể validate khúc này rồi, ko cho tạo order có quantity > stock. Ở đây BE vẫn check lại đề phòng bad case (mùa flash sale, stock giảm cực nhanh trong thời gian ngắn, FE ko thể cứ 0.5s/lần fetch data stock để validate user input)
       "Price": 50.0

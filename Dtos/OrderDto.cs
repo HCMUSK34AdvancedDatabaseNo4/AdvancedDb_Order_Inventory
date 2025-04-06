@@ -6,7 +6,7 @@ namespace AdvancedDb_Order_Inventory.Dtos
     {
         // Order properties
         public Guid Id { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public int? VoucherId { get; set; }
         public decimal TotalPrice { get; set; }
         public string? ShipmentStatus { get; set; }

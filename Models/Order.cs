@@ -11,7 +11,7 @@ namespace AdvancedDb_Order_Inventory.Models
         public Guid Id { get; set; }
 
         [Column("user_id")]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         [Column("voucher_id")]
         public int? VoucherId { get; set; }
