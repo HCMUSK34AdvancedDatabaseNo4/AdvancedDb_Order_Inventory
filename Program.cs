@@ -1,29 +1,38 @@
-using AdvancedDb_Order_Inventory.Repository;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using AdvancedDb_Order_Inventory.Repository;
 
-namespace AdvancedDb_Order_Inventory
+var builder = WebApplication.CreateBuilder(args);
+
+// Register DbContext with PostgreSQL
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Register Repository
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
+
+builder.Services.AddControllers();
+
+// Configure CORS for FE
+builder.Services.AddCors(options =>
 {
-    public class Program
+    options.AddPolicy("AllowFrontend", policy =>
     {
-        public static void Main(string[] args)
-        {
-            var builder = WebApplication.CreateBuilder(args);
+        policy.WithOrigins("http://localhost:1603")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
-            builder.Services.AddControllers();
-            builder.Services.AddEndpointsApiExplorer();
+var app = builder.Build();
 
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+app.UseRouting();
+app.UseCors("AllowFrontend");
 
-            builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
-            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+app.UseAuthorization();
+app.MapControllers();
 
-            var app = builder.Build();
-
-            app.UseAuthorization();
-            app.MapControllers();
-
-            app.Run();
-        }
-    }
-}
+app.Run();
